@@ -1,0 +1,51 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type User {
+  """Example field (placeholder)"""
+  ID: Int!
+}
+
+type Admin {
+  """Example field (placeholder)"""
+  exampleField: Int!
+}
+
+type Query {
+  healthCheck: String!
+  users: [User!]!
+  user(id: Int!): User!
+  admin(id: Int!): Admin!
+}
+
+type Mutation {
+  createUser(createUserInput: CreateUserInput!): User!
+  updateUser(updateUserInput: UpdateUserInput!): User!
+  removeUser(id: Int!): User!
+  createAdmin(createAdminInput: CreateAdminInput!): Admin!
+  updateAdmin(updateAdminInput: UpdateAdminInput!): Admin!
+  removeAdmin(id: Int!): Admin!
+}
+
+input CreateUserInput {
+  """Example field (placeholder)"""
+  exampleField: Int!
+}
+
+input UpdateUserInput {
+  """Example field (placeholder)"""
+  exampleField: Int
+  id: Int!
+}
+
+input CreateAdminInput {
+  """Example field (placeholder)"""
+  exampleField: Int!
+}
+
+input UpdateAdminInput {
+  """Example field (placeholder)"""
+  exampleField: Int
+  id: Int!
+}
