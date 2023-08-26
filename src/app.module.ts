@@ -9,6 +9,7 @@ import { WinstonModule } from 'nest-winston';
 import { AdminModule } from './admin/admin.module';
 import { ConfigModule } from './config/config.module';
 import { format, transports } from 'winston';
+import { ApolloServerPluginLandingPageLocalDefault } from '@apollo/server/plugin/landingPage/default';
 
 const customFormat = format.printf(({ level, message, timestamp, stack }) => {
   level = level.toUpperCase();
@@ -37,6 +38,8 @@ const customFormat = format.printf(({ level, message, timestamp, stack }) => {
     GraphQLModule.forRoot<ApolloDriverConfig>({
       driver: ApolloDriver,
       autoSchemaFile: 'schema.gql',
+      playground: false,
+      plugins: [ApolloServerPluginLandingPageLocalDefault()],
     }),
     WinstonModule.forRootAsync({
       useFactory: () => ({
