@@ -16,6 +16,7 @@ type Query {
   healthCheck: String!
   users: [User!]!
   user(id: Int!): User!
+  admins: String!
   admin(id: Int!): Admin!
 }
 

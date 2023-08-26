@@ -8,6 +8,29 @@ import { PrismaModule } from './prisma/prisma.module';
 import { WinstonModule } from 'nest-winston';
 import { AdminModule } from './admin/admin.module';
 import { ConfigModule } from './config/config.module';
+import { format, transports } from 'winston';
+
+const customFormat = format.printf(({ level, message, timestamp, stack }) => {
+  level = level.toUpperCase();
+
+  let logFormat = `${timestamp} [${level}] : ${JSON.stringify(
+    message,
+    null,
+    2,
+  )}`;
+
+  if (level == 'info') {
+    logFormat = `${timestamp} [${level}]: ${message}`;
+  }
+
+  if (level == 'http') {
+    logFormat = `${timestamp} [${level}] : [requestID: , userId: ] : ${message.method} ${message.url}`;
+  }
+  if (stack) {
+    logFormat = logFormat + JSON.stringify(stack, null, 2);
+  }
+  return logFormat;
+});
 
 @Module({
   imports: [
@@ -15,14 +38,15 @@ import { ConfigModule } from './config/config.module';
       driver: ApolloDriver,
       autoSchemaFile: 'schema.gql',
     }),
+    WinstonModule.forRootAsync({
+      useFactory: () => ({
+        format: format.combine(format.timestamp(), customFormat),
+        transports: [new transports.Console()],
+      }),
+    }),
     ConfigModule,
     UsersModule,
     PrismaModule,
-    WinstonModule.forRootAsync({
-      useFactory: () => ({
-        transports: [],
-      }),
-    }),
     AdminModule,
   ],
   controllers: [],

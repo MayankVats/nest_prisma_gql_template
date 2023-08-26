@@ -12,7 +12,6 @@ export class ConfigService {
 
   constructor() {
     this.loadFromEnv();
-    console.log('ENVIRONMENT LOADED: ', this.config);
   }
 
   public loadFromEnv() {

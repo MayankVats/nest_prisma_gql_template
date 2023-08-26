@@ -13,7 +13,7 @@ export class AdminResolver {
     return this.adminService.create(createAdminInput);
   }
 
-  @Query(() => [Admin], { name: 'admin' })
+  @Query(() => String, { name: 'admins' })
   findAll() {
     return this.adminService.findAll();
   }

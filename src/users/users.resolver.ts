@@ -3,7 +3,6 @@ import { UsersService } from './users.service';
 import { User } from './entities/user.entity';
 import { CreateUserInput } from './dto/create-user.input';
 import { UpdateUserInput } from './dto/update-user.input';
-
 @Resolver(() => User)
 export class UsersResolver {
   constructor(private readonly usersService: UsersService) {}
@@ -15,7 +14,6 @@ export class UsersResolver {
 
   @Query(() => [User], { name: 'users' })
   findAll() {
-    // console.log(configs.DATABASE_URL, configs.SERVER_PORT);
     return this.usersService.findAll();
   }
 
