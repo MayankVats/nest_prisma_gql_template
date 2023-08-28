@@ -3,10 +3,12 @@ import { AppResolver } from './app.resolver';
 import { AppService } from './app.service';
 import { UsersModule } from './users/users.module';
 import { GraphQLModule } from '@nestjs/graphql';
-import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
+import {
+  ApolloFederationDriver,
+  ApolloFederationDriverConfig,
+} from '@nestjs/apollo';
 import { PrismaModule } from './prisma/prisma.module';
 import { WinstonModule } from 'nest-winston';
-import { AdminModule } from './admin/admin.module';
 import { ConfigModule } from './config/config.module';
 import { format, transports } from 'winston';
 import { ApolloServerPluginLandingPageLocalDefault } from '@apollo/server/plugin/landingPage/default';
@@ -35,9 +37,12 @@ const customFormat = format.printf(({ level, message, timestamp, stack }) => {
 
 @Module({
   imports: [
-    GraphQLModule.forRoot<ApolloDriverConfig>({
-      driver: ApolloDriver,
-      autoSchemaFile: 'schema.gql',
+    GraphQLModule.forRoot<ApolloFederationDriverConfig>({
+      driver: ApolloFederationDriver,
+      autoSchemaFile: {
+        federation: 2,
+        path: 'schema.gql',
+      },
       playground: false,
       plugins: [ApolloServerPluginLandingPageLocalDefault()],
     }),
@@ -50,7 +55,6 @@ const customFormat = format.printf(({ level, message, timestamp, stack }) => {
     ConfigModule,
     UsersModule,
     PrismaModule,
-    AdminModule,
   ],
   controllers: [],
   providers: [AppService, AppResolver],

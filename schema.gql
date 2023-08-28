@@ -3,50 +3,40 @@
 # ------------------------------------------------------
 
 type User {
-  """Example field (placeholder)"""
-  ID: Int!
-}
-
-type Admin {
-  """Example field (placeholder)"""
-  exampleField: Int!
+  id: ID!
+  email: String!
+  password: String!
 }
 
 type Query {
   healthCheck: String!
   users: [User!]!
-  user(id: Int!): User!
-  admins: String!
-  admin(id: Int!): Admin!
+  user(id: String!): User!
 }
 
 type Mutation {
   createUser(createUserInput: CreateUserInput!): User!
   updateUser(updateUserInput: UpdateUserInput!): User!
   removeUser(id: Int!): User!
-  createAdmin(createAdminInput: CreateAdminInput!): Admin!
-  updateAdmin(updateAdminInput: UpdateAdminInput!): Admin!
-  removeAdmin(id: Int!): Admin!
 }
 
 input CreateUserInput {
-  """Example field (placeholder)"""
-  exampleField: Int!
+  """id of the user"""
+  id: String!
+
+  """email of the user"""
+  email: String!
+
+  """password of the user"""
+  password: String!
 }
 
 input UpdateUserInput {
-  """Example field (placeholder)"""
-  exampleField: Int
-  id: Int!
-}
+  id: String!
 
-input CreateAdminInput {
-  """Example field (placeholder)"""
-  exampleField: Int!
-}
+  """email of the user"""
+  email: String
 
-input UpdateAdminInput {
-  """Example field (placeholder)"""
-  exampleField: Int
-  id: Int!
+  """password of the user"""
+  password: String
 }
