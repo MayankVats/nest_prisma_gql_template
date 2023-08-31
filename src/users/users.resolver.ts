@@ -10,6 +10,7 @@ import { UsersService } from './users.service';
 import { User } from './entities/user.entity';
 import { CreateUserInput } from './dto/create-user.input';
 import { UpdateUserInput } from './dto/update-user.input';
+import GraphQLJSON from 'graphql-type-json';
 @Resolver(() => User)
 export class UsersResolver {
   constructor(private readonly usersService: UsersService) {}
@@ -17,6 +18,11 @@ export class UsersResolver {
   @Mutation(() => User)
   createUser(@Args('createUserInput') createUserInput: CreateUserInput) {
     return this.usersService.create(createUserInput);
+  }
+
+  @Query(() => GraphQLJSON)
+  getCountryCodes() {
+    return this.usersService.getCountryCodes();
   }
 
   @Query(() => [User], { name: 'users' })
