@@ -14,6 +14,7 @@ import { format, transports } from 'winston';
 import { ApolloServerPluginLandingPageLocalDefault } from '@apollo/server/plugin/landingPage/default';
 import { LoggingPlugin } from './shared/providers';
 import { AwsModule } from './aws/aws.module';
+import { AppController } from './app.controller';
 
 const customFormat = format.printf(({ level, message, timestamp, stack }) => {
   let logFormat = `${timestamp} [${level}] : ${JSON.stringify(message)}`;
@@ -54,7 +55,7 @@ const customFormat = format.printf(({ level, message, timestamp, stack }) => {
     PrismaModule,
     AwsModule,
   ],
-  controllers: [],
+  controllers: [AppController],
   providers: [AppService, AppResolver, LoggingPlugin],
 })
 export class AppModule {}

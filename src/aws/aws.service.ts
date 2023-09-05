@@ -38,7 +38,6 @@ export class AwsService {
       return response;
     } catch (error) {
       this.logger.error(error);
-      throw error;
     }
   }
 }

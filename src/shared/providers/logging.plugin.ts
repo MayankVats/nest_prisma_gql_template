@@ -7,6 +7,7 @@ import { Plugin } from '@nestjs/apollo';
 import { Inject } from '@nestjs/common';
 import { WINSTON_MODULE_PROVIDER } from 'nest-winston';
 import { Logger } from 'winston';
+import { v4 as uuidv4 } from 'uuid';
 
 @Plugin()
 export class LoggingPlugin implements ApolloServerPlugin {
@@ -29,7 +30,15 @@ export class LoggingPlugin implements ApolloServerPlugin {
         const { queryType, query } = _fetchQueryTypeAndName(requestContext);
 
         if (query !== '_service' && query !== '__schema') {
-          logger.http({ queryType, query });
+          const userData = requestContext.request.http.headers.get('user');
+          let user = undefined;
+          if (userData) {
+            user = JSON.parse(userData);
+          }
+
+          const reqId = uuidv4();
+
+          logger.http({ queryType, query, userId: user?.id, reqId });
         }
       },
     };
